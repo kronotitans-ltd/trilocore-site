@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trilocore — Blockchain Security Infrastructure</title>
-  <meta name="description" content="Trilocore builds GPU-accelerated smart contract security infrastructure. BEVM fuzzer, Janus AI model, 208 vulnerability detectors. Seeking ecosystem grants." />
+  <meta name="description" content="Trilocore makes smart-contract security testing visual — a Burp Suite for the EVM in your browser. See selectors and CFG blocks, replay transactions, prove exploits on a mainnet fork. GPU fuzzer + Janus AI. Seeking ecosystem grants." />
   <link rel="canonical" href="https://trilocore.com/" />
   <meta name="theme-color" content="#0a0c10" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -685,6 +685,124 @@
     }
     .faq-a { font-size: 13.5px; color: var(--muted); line-height: 1.65; padding-left: 27px; }
     @media (max-width: 760px) { .faq-grid { grid-template-columns: 1fr; } }
+
+    /* ── Workbench (live IDE showcase) ──────────────────────────── */
+    .workbench { background: var(--surface); }
+    .wb-frame {
+      margin-top: 48px;
+      border: 1px solid var(--border-hi); border-radius: 12px;
+      overflow: hidden; background: var(--bg);
+      box-shadow: 0 24px 64px rgba(0,0,0,.5);
+    }
+    /* browser chrome */
+    .wb-chrome {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 14px; background: #0d1017;
+      border-bottom: 1px solid var(--border);
+    }
+    .wb-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+    .wb-dot.r { background: #f85149; } .wb-dot.y { background: #d29922; } .wb-dot.g { background: #3fb950; }
+    .wb-url {
+      margin-left: 12px; flex: 1; max-width: 340px;
+      background: var(--overlay); border: 1px solid var(--border);
+      border-radius: 6px; padding: 4px 12px;
+      font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--muted);
+    }
+    /* app header bar */
+    .wb-top {
+      display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+      padding: 10px 16px; border-bottom: 1px solid var(--border);
+      font-size: 12px; color: var(--muted); font-family: "JetBrains Mono", monospace;
+    }
+    .wb-brand { color: var(--orange); font-weight: 700; font-family: "Inter", sans-serif; font-size: 15px; }
+    .wb-top b { color: var(--text); font-weight: 600; }
+    .wb-admin {
+      margin-left: auto; display: inline-flex; align-items: center; gap: 8px;
+      color: var(--orange); border: 1px solid rgba(219,109,40,.35);
+      border-radius: 5px; padding: 2px 9px; font-size: 11px; font-weight: 700;
+    }
+    /* body: sidebar + main */
+    .wb-body { display: grid; grid-template-columns: 230px 1fr; min-height: 460px; }
+    .wb-side {
+      border-right: 1px solid var(--border); padding: 14px;
+      background: var(--surface); font-size: 12px; overflow: hidden;
+    }
+    .wb-addr {
+      font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--orange);
+      word-break: break-all; line-height: 1.4; margin-bottom: 8px;
+    }
+    .wb-meta { color: var(--muted); font-size: 11px; line-height: 1.7; margin-bottom: 14px; }
+    .wb-meta .sol { color: var(--green); font-weight: 600; }
+    .wb-meta .unk { color: var(--orange); }
+    .wb-grouphdr {
+      font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--faint); margin: 14px 0 8px;
+    }
+    .wb-tabs2 { display: flex; gap: 6px; margin-bottom: 8px; font-size: 11px; }
+    .wb-tabs2 span { color: var(--muted); }
+    .wb-tabs2 .on { color: var(--text); border-bottom: 2px solid var(--orange); padding-bottom: 1px; }
+    .wb-sel, .wb-block {
+      font-family: "JetBrains Mono", monospace; font-size: 11.5px;
+      padding: 4px 0; color: var(--orange); display: flex; gap: 8px;
+    }
+    .wb-sel .t { color: var(--faint); }
+    .wb-block { color: var(--muted); flex-direction: column; gap: 2px; padding: 7px 0; border-top: 1px solid var(--border); }
+    .wb-block .pc { color: var(--text); }
+    .wb-block .pc .proxy { float: right; color: var(--faint); font-size: 10px; }
+    .wb-block .verb { color: var(--accent); }
+    .wb-block .tag { color: var(--orange); font-size: 10px; }
+    .wb-block .orphan { color: var(--faint); font-size: 10px; }
+    /* main pane */
+    .wb-main { display: flex; flex-direction: column; }
+    .wb-tabbar {
+      display: flex; gap: 2px; overflow-x: auto; padding: 0 10px;
+      border-bottom: 1px solid var(--border); background: var(--bg);
+    }
+    .wb-tab {
+      padding: 11px 13px; font-size: 12.5px; color: var(--muted);
+      white-space: nowrap; border-bottom: 2px solid transparent; cursor: default;
+    }
+    .wb-tab.active { color: var(--text); border-bottom-color: var(--orange); }
+    .wb-tab .ico { color: var(--orange); margin-right: 5px; }
+    .wb-panes { display: grid; grid-template-columns: 1fr 1fr; flex: 1; }
+    .wb-req, .wb-res { padding: 16px; }
+    .wb-req { border-right: 1px solid var(--border); }
+    .wb-send {
+      background: var(--orange); color: #fff; border: none; cursor: default;
+      font-weight: 600; font-size: 12px; padding: 6px 18px; border-radius: 6px;
+      margin-bottom: 14px;
+    }
+    .wb-field { margin-bottom: 10px; }
+    .wb-field label { display: block; font-size: 10px; color: var(--faint); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 3px; }
+    .wb-input {
+      font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--text);
+      background: var(--overlay); border: 1px solid var(--border); border-radius: 5px;
+      padding: 6px 10px; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .wb-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .wb-panehdr { font-size: 11px; color: var(--faint); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px; }
+    .wb-ok { color: var(--green); font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 600; margin-bottom: 10px; }
+    .wb-kv { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--muted); line-height: 1.8; }
+    .wb-kv .v { color: var(--text); }
+    .wb-hex {
+      font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--accent);
+      word-break: break-all; margin: 10px 0; line-height: 1.5;
+    }
+    .wb-trace {
+      margin-top: 12px; border: 1px solid rgba(63,185,80,.3);
+      border-radius: 8px; padding: 12px 14px; background: rgba(63,185,80,.04);
+      font-family: "JetBrains Mono", monospace; font-size: 11.5px; line-height: 1.7;
+    }
+    .wb-trace .h { color: var(--green); font-weight: 700; display:flex; justify-content:space-between; }
+    .wb-trace .h small { color: var(--faint); font-weight: 400; }
+    .wb-trace .ret { color: var(--orange); }
+    .wb-caption { margin-top: 14px; font-size: 12px; color: var(--faint); line-height: 1.6; }
+    @media (max-width: 820px) {
+      .wb-body { grid-template-columns: 1fr; }
+      .wb-side { display: none; }
+      .wb-panes { grid-template-columns: 1fr; }
+      .wb-req { border-right: none; border-bottom: 1px solid var(--border); }
+    }
   </style>
 </head>
 <body>
@@ -703,6 +821,7 @@
     <ul class="nav-links">
       <li><a href="#problem">Problem</a></li>
       <li><a href="#products">Products</a></li>
+      <li><a href="#workbench">Workbench</a></li>
       <li><a href="#roadmap">Roadmap</a></li>
       <li><a href="#apply">Apply for Grant</a></li>
     </ul>
@@ -726,10 +845,10 @@
       <span class="gradient-text">On-Chain Future</span>
     </h1>
     <p class="hero-sub">
-      Trilocore builds GPU-accelerated smart contract security tooling —
-      combining a 1024-thread EVM fuzzer with Janus, our AI-powered
-      vulnerability analysis model. 208 detectors. 50K–200K executions/second.
-      Security infrastructure for the entire ecosystem.
+      Trilocore makes smart-contract security testing <strong style="color:var(--text)">visual</strong> —
+      a Burp Suite for the EVM, right in your browser. See every selector, CFG block,
+      and storage slot, replay any transaction, and prove exploits on a live mainnet
+      fork. Backed by a 1024-thread GPU fuzzer, 208 detectors, and the Janus AI model.
     </p>
     <div class="hero-actions">
       <a href="#apply" class="btn-primary">
@@ -816,6 +935,10 @@
       <div class="trust-item">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#58a6ff" stroke-width="1.5"/><path d="M5.5 8l1.8 1.8L10.8 6" stroke="#58a6ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span><b>208</b> vulnerability detectors</span>
+      </div>
+      <div class="trust-item">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#db6d28" stroke-width="1.5"/><path d="M5.5 8l1.8 1.8L10.8 6" stroke="#db6d28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Browser workbench — <b>no install</b></span>
       </div>
     </div>
   </div>
@@ -926,6 +1049,7 @@
           exploit PoCs automatically.
         </div>
         <ul class="feature-list">
+          <li>Visual workbench: Repeater, Scanner, Intruder, CFG graph, storage</li>
           <li>208 static bytecode detectors across 20 submodules</li>
           <li>13 runtime oracles: taint, reentrancy, integer, control-flow</li>
           <li>Orphan block discovery via bipartite attack graph</li>
@@ -1002,6 +1126,147 @@
         <div class="arch-body">Auto-generated Foundry exploit test with real calldata, profit assertion, and step-by-step attack narrative from Janus AI.</div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ── Workbench (live IDE showcase) ─────────────────────────────────── -->
+<section class="section workbench" id="workbench">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">The Workbench</div>
+      <h2 class="section-title">Security testing, made visual</h2>
+      <p class="section-body">
+        Auditing a deployed contract used to mean a terminal and a stack of scripts.
+        Trilocore puts it in your browser — a Burp Suite for the EVM. Every selector,
+        every CFG block, every storage slot is laid out in front of you. Pick a
+        function, set the sender, hit <strong style="color:var(--text)">Send</strong>,
+        and watch the execution trace on a live mainnet fork.
+      </p>
+    </div>
+
+    <div class="wb-frame reveal reveal-delay-1">
+      <!-- browser chrome -->
+      <div class="wb-chrome">
+        <span class="wb-dot r"></span><span class="wb-dot y"></span><span class="wb-dot g"></span>
+        <span class="wb-url">bevm.trilocore.ai</span>
+      </div>
+
+      <!-- app header -->
+      <div class="wb-top">
+        <span class="wb-brand">bevm</span>
+        <span>RPC <b>mainnet-fork</b></span>
+        <span>Target balance <b>386.48 ETH</b></span>
+        <span>History <b>1</b></span>
+        <span class="wb-admin">● Mainnet fork</span>
+      </div>
+
+      <!-- body -->
+      <div class="wb-body">
+        <!-- sidebar -->
+        <aside class="wb-side">
+          <div class="wb-addr">0x0286f920f893513c7ec9fe35ba0a4760229a243e</div>
+          <div class="wb-meta">
+            93 CFG blocks · 10 selectors<br />
+            <span class="sol">SOLIDITY 0.5.0</span> · 0 known / <span class="unk">10 unknown</span><br />
+            DISPATCH COLLISION (SCSLIB)
+          </div>
+
+          <div class="wb-grouphdr">Selectors (10)</div>
+          <div class="wb-tabs2"><span class="on">ALL</span><span>KNOWN (0)</span><span>UNKNOWN (10)</span></div>
+          <div class="wb-sel">0x3d103b6d <span class="t">unknown</span></div>
+          <div class="wb-sel">0x54fd4d50 <span class="t">unknown</span></div>
+          <div class="wb-sel">0x5ec2dc8d <span class="t">unknown</span></div>
+          <div class="wb-sel">0x66d38203 <span class="t">unknown</span></div>
+          <div class="wb-sel">0x750142e6 <span class="t">unknown</span></div>
+          <div class="wb-sel">0x8da5cb5b <span class="t">unknown</span></div>
+          <div class="wb-sel">0xb1622818 <span class="t">unknown</span></div>
+          <div class="wb-sel">0xdf18e047 <span class="t">unknown</span></div>
+
+          <div class="wb-grouphdr">CFG Blocks (94)</div>
+          <div class="wb-block">
+            <span class="pc">0x2f2 <span class="proxy">PROXY</span></span>
+            <span><span class="verb">PATCH → JUMPI</span> (46)</span>
+            <span class="tag">SSTORE</span>
+            <span class="orphan">orphan / unreached</span>
+          </div>
+          <div class="wb-block">
+            <span class="pc">0x32b <span class="proxy">PROXY</span></span>
+            <span><span class="verb">TRANSFER → JUMPI</span> (36)</span>
+            <span class="tag">CALL</span>
+            <span class="orphan">orphan / unreached</span>
+          </div>
+          <div class="wb-block">
+            <span class="pc">0x35d <span class="proxy">PROXY</span></span>
+            <span><span class="verb">OPAQUE → JUMP</span> (8)</span>
+          </div>
+        </aside>
+
+        <!-- main -->
+        <div class="wb-main">
+          <div class="wb-tabbar">
+            <div class="wb-tab active"><span class="ico">▣</span>Repeater</div>
+            <div class="wb-tab"><span class="ico">◎</span>Scanner</div>
+            <div class="wb-tab"><span class="ico">⚡</span>Intruder</div>
+            <div class="wb-tab"><span class="ico">◫</span>Graph</div>
+            <div class="wb-tab"><span class="ico">✦</span>AI</div>
+            <div class="wb-tab"><span class="ico">▤</span>Contract</div>
+            <div class="wb-tab"><span class="ico">⌖</span>Decoder</div>
+            <div class="wb-tab"><span class="ico">▦</span>Storage</div>
+            <div class="wb-tab"><span class="ico">↯</span>Transient</div>
+            <div class="wb-tab"><span class="ico">◳</span>Blocks</div>
+            <div class="wb-tab"><span class="ico">⇆</span>Comparer</div>
+            <div class="wb-tab"><span class="ico">◌</span>Passive</div>
+          </div>
+
+          <div class="wb-panes">
+            <!-- request -->
+            <div class="wb-req">
+              <button class="wb-send">Send</button>
+              <div class="wb-panehdr">Request</div>
+              <div class="wb-field"><label>To</label>
+                <div class="wb-input">0x0286f920f893513c7ec9fe35ba0a4760229a243e</div></div>
+              <div class="wb-field"><label>Selector</label>
+                <div class="wb-input">0x3d103b6d</div></div>
+              <div class="wb-field"><label>Signature</label>
+                <div class="wb-input">transfer(address,uint256)</div></div>
+              <div class="wb-row3">
+                <div class="wb-field"><label>Sender</label><div class="wb-input">attacker</div></div>
+                <div class="wb-field"><label>Value</label><div class="wb-input">0</div></div>
+                <div class="wb-field"><label>Gas</label><div class="wb-input">10000000</div></div>
+              </div>
+            </div>
+
+            <!-- response -->
+            <div class="wb-res">
+              <div class="wb-panehdr">Response</div>
+              <div class="wb-ok">EVM/1 200 OK</div>
+              <div class="wb-kv">
+                Gas-Used <span class="v">23544</span><br />
+                Sender-Delta <span class="v">−23544000000000 wei</span><br />
+                Target-Delta <span class="v">0 wei</span><br />
+                Slots-Changed <span class="v">0</span>
+              </div>
+              <div class="wb-hex">0x000000000000000000000000000000000000000000000000005528bed8b9663f400</div>
+              <div class="wb-kv">
+                uint256 <span class="v">98181829285200000000</span><br />
+                address <span class="v">0x…5528bed8b9663f400</span>
+              </div>
+              <div class="wb-trace">
+                <div class="h">EXECUTION TRACE <small>66 steps · gas 23544</small></div>
+                Terminal opcode <span class="ret">RETURN</span><br />
+                Revert PC <span style="color:var(--text)">0xdb @ depth 1</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="wb-caption reveal reveal-delay-2">
+      Live at <a href="https://bevm.trilocore.ai/" target="_blank" rel="noopener">bevm.trilocore.ai</a>.
+      No install, no source code required: paste an address and the bytecode is disassembled,
+      selectors resolved, and the CFG mapped in under a second.
+    </p>
   </div>
 </section>
 
