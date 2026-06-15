@@ -949,28 +949,31 @@
   <div class="container">
     <div class="reveal">
       <div class="section-label">The Problem</div>
-      <h2 class="section-title">$5.8 billion lost to<br />smart contract exploits</h2>
+      <!-- NOTE: 2025 figures below (Chainalysis / Beosin; Cetus & Balancer amounts) are
+           owner-supplied. Verify against the cited reports before relying on them. -->
+      <h2 class="section-title">$3.4B stolen across crypto in 2025 —<br />smart contracts are still the soft target</h2>
       <p class="section-body">
-        Existing tools miss the attacks that matter — computed jumps into orphan blocks,
-        flash-loan oracle manipulation, and composed multi-primitive chains. Manual audits
-        take weeks and cost hundreds of thousands of dollars. The ecosystem needs
-        automated, deep-coverage security infrastructure that anyone can run.
+        Existing tools still miss the attacks that matter — computed jumps into orphan
+        blocks, precision and rounding errors, complex multi-step kill chains, legacy
+        contract re-exploits, and business-logic flaws. Manual audits remain slow and
+        expensive. The ecosystem needs fast, deep, automated security infrastructure
+        anyone can run.
       </p>
     </div>
 
     <div class="problem-grid">
       <div>
         <div class="problem-card reveal reveal-delay-1" style="margin-bottom:16px">
-          <div class="problem-stat red">$5.8B</div>
-          <div class="problem-desc">Total value drained from smart contracts in 2024 alone — reentrancy, oracle manipulation, access control bypasses.</div>
+          <div class="problem-stat red">$3.4B</div>
+          <div class="problem-desc">Stolen across crypto in 2025 (per Chainalysis). Smart-contract and protocol-logic bugs remain a primary attack surface — far from a solved problem.</div>
         </div>
         <div class="problem-card reveal reveal-delay-2" style="margin-bottom:16px">
-          <div class="problem-stat orange">73%</div>
-          <div class="problem-desc">of critical on-chain exploits involve vulnerability patterns that existing static analyzers fail to detect in a complete end-to-end analysis.</div>
+          <div class="problem-stat orange">62+</div>
+          <div class="problem-desc">Smart-contract exploits ranked among the top attack methods of 2025 (per Beosin) — hundreds of millions lost, including Cetus (~$224M) and Balancer (~$128M).</div>
         </div>
         <div class="problem-card reveal reveal-delay-3">
-          <div class="problem-stat yellow">$250K</div>
-          <div class="problem-desc">Average cost of a professional manual smart contract audit — prohibitive for early-stage and independent protocols.</div>
+          <div class="problem-stat yellow">$150K+</div>
+          <div class="problem-desc">A full professional manual audit runs $150K–$250K and still takes weeks — prohibitive for early-stage and independent protocols.</div>
         </div>
       </div>
 
@@ -980,36 +983,48 @@
           <li>
             <span class="pill pill-red">P0</span>
             <div>
-              <strong>Orphan block exploits</strong> — dead code blocks with DELEGATECALL or SELFDESTRUCT reachable via computed JUMP at runtime. No existing tool discovers these paths.
+              <strong>Orphan block exploits</strong> — dead code blocks with DELEGATECALL or SELFDESTRUCT reachable via computed JUMP at runtime. Static analyzers never walk these paths.
             </div>
           </li>
           <li>
             <span class="pill pill-orange">P1</span>
             <div>
-              <strong>Composed attack chains</strong> — flash loan + oracle manipulation + reentrancy chains. Tools analyze single transactions, missing the multi-step kill chain.
+              <strong>Precision &amp; rounding errors</strong> — tiny per-call rounding deltas drained across thousands of micro-swaps (the Balancer-style failure). Single-transaction analyzers never see the cumulative loss.
             </div>
           </li>
           <li>
             <span class="pill pill-orange">P1</span>
             <div>
-              <strong>Gate bypass patterns</strong> — <code>require(msg.sender == owner)</code> bypassed via ungated writers to the owner slot. Attack graph traversal is absent from existing tools.
+              <strong>Composed attack chains</strong> — flash loan + oracle manipulation + reentrancy + legacy paths. Tools analyze single transactions, missing the multi-step kill chain.
+            </div>
+          </li>
+          <li>
+            <span class="pill pill-orange">P1</span>
+            <div>
+              <strong>Gate bypass &amp; access control</strong> — <code>require(msg.sender == owner)</code> bypassed via ungated writers to the owner slot — worse in upgradeable and cross-chain setups. Attack-graph traversal is absent from existing tools.
             </div>
           </li>
           <li>
             <span class="pill pill-yellow">P2</span>
             <div>
-              <strong>Cross-protocol composability</strong> — Aave flash loan → Uniswap oracle → Compound drain. No fuzzer models this today.
+              <strong>Legacy &amp; deprecated contracts</strong> — forgotten code that still custodies funds and gets re-exploited long after launch. Rarely re-audited, rarely monitored.
             </div>
           </li>
           <li>
             <span class="pill pill-yellow">P2</span>
             <div>
-              <strong>Speed</strong> — Echidna and Foundry fuzz at ~5K iterations/second. We run 200K+. 40× speed means 40× deeper coverage in the same time budget.
+              <strong>Speed &amp; coverage</strong> — Echidna and Foundry fuzz at ~5K iterations/second; we run 200K+. ~40× throughput means far deeper exploration in the same time budget.
             </div>
           </li>
         </ul>
       </div>
     </div>
+
+    <p class="reveal" style="margin-top:48px;font-size:16px;color:var(--text);line-height:1.7;max-width:780px;">
+      Manual audits take weeks. <strong>BEVM Scanner + Janus AI</strong> deliver
+      GPU-accelerated deep fuzzing (200K+ exec/s), visual attack graphs, and
+      reproducible exploit PoCs — <span style="color:var(--accent);font-weight:600;">in minutes</span>.
+    </p>
   </div>
 </section>
 
