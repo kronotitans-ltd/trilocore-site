@@ -1,0 +1,14 @@
+# Trilocore security contact and responsible disclosure policy
+# https://www.rfc-editor.org/rfc/rfc9116
+
+Contact: mailto:security@trilocore.com
+Contact: https://trilocore.com/#contact
+Expires: 2027-06-30T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://trilocore.com/.well-known/security.txt
+Policy: https://trilocore.com/terms.html
+
+# We support coordinated disclosure. Please report vulnerabilities in our
+# website or tooling to security@trilocore.com. Give us a reasonable window to
+# remediate before public disclosure. Do not access or modify data that is not
+# yours, and do not degrade our services while testing.
