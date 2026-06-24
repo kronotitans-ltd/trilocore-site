@@ -136,7 +136,7 @@
             <div class="finding-d">Foundry test generated → results/exploit_0xA0b8.sol</div>
           </div>
         </div>
-        <div class="preview-foot">✓ Replay-verified on Anvil mainnet fork</div>
+        <div class="preview-foot">✓ Replay-verified on BEVM mainnet fork</div>
       </div>
     </div>
   </div>
@@ -245,7 +245,7 @@
       <div class="card reveal"><div class="card-eyebrow">01 · RECON</div><div class="card-title">Bytecode X-ray</div><div class="card-body">Disassemble, build the CFG, extract selectors, resolve 4byte names, and detect compiler version and known CVEs.</div></div>
       <div class="card reveal reveal-d1"><div class="card-eyebrow">02 · ANALYSIS</div><div class="card-title">Attack graph</div><div class="card-body">Bipartite selector↔slot graph. Finds ungated write paths, orphan blocks with dangerous ops, and access-control bypass routes.</div></div>
       <div class="card reveal reveal-d2"><div class="card-eyebrow">03 · FUZZ</div><div class="card-title">GPU execution</div><div class="card-body">Parallel SIMD threads with multiple mutation strategies and live oracles for taint, reentrancy, integer, and control-flow bugs.</div></div>
-      <div class="card reveal"><div class="card-eyebrow">04 · VERIFY</div><div class="card-title">CPU replay</div><div class="card-body">Multi-layer verdict on an Anvil mainnet fork: revert check, PC reachability, ABI packing, fund-flow analysis, trace confirmation.</div></div>
+      <div class="card reveal"><div class="card-eyebrow">04 · VERIFY</div><div class="card-title">CPU replay</div><div class="card-body">Multi-layer verdict on a BEVM mainnet fork: revert check, PC reachability, ABI packing, fund-flow analysis, trace confirmation.</div></div>
       <div class="card reveal reveal-d1"><div class="card-eyebrow">05 · AMPLIFY</div><div class="card-title">Profit calculation</div><div class="card-body">Flash-loan wrapping (Aave V3, Balancer, dYdX) and loop amplification. Net profit = extracted − gas − fees − MEV discount.</div></div>
       <div class="card reveal reveal-d2"><div class="card-eyebrow">06 · REPORT</div><div class="card-title">Foundry PoC</div><div class="card-body">Auto-generated Foundry exploit test with real calldata, a profit assertion, and a plain-language narrative from Janus AI.</div></div>
     </div>
@@ -272,7 +272,7 @@
         <div class="product-desc">
           GPU-accelerated EVM bytecode fuzzer running parallel attack threads through a five-phase
           pipeline — recon, x-ray, attack-graph construction, fuzzing, and CPU replay confirmation
-          on an Anvil mainnet fork. Generates working Foundry exploit PoCs automatically.
+          on a BEVM mainnet fork. Generates working Foundry exploit PoCs automatically.
         </div>
         <ul class="feature-list">
           <li>Visual workbench: Repeater, Scanner, Intruder, CFG graph, storage</li>
@@ -470,7 +470,7 @@
 
     <div class="roadmap-grid">
       <div class="reveal">
-        <div class="milestone"><div class="ms-dot done">✓</div><div><div class="ms-title">BEVM Scanner v1 — Complete</div><div class="ms-body">GPU fuzzer, 208 detectors, attack graph, gate bypass, orphan block discovery, Anvil replay. Live at bevm.trilocore.ai.</div></div></div>
+        <div class="milestone"><div class="ms-dot done">✓</div><div><div class="ms-title">BEVM Scanner v1 — Complete</div><div class="ms-body">GPU fuzzer, 208 detectors, attack graph, gate bypass, orphan block discovery, BEVM replay. Live at bevm.trilocore.ai.</div></div></div>
         <div class="milestone"><div class="ms-dot active">→</div><div><div class="ms-title">Multi-contract fuzzing engine — Q3 2026</div><div class="ms-body">End-to-end fuzzing across 3–5 contract chains. Flash loan → oracle → drain modeled as a single transaction sequence.</div></div></div>
         <div class="milestone"><div class="ms-dot next">→</div><div><div class="ms-title">Janus AI model launch — Q3 2026</div><div class="ms-body">EVM-specialized analysis model. Plain-language exploit reports, attack-chain composition, CI/CD integration API.</div></div></div>
         <div class="milestone"><div class="ms-dot next">→</div><div><div class="ms-title">Cross-protocol oracle manipulation — Q4 2026</div><div class="ms-body">Inject manipulated oracle returns during fuzzing. Detect AMM pool drain via TWAP manipulation.</div></div></div>
